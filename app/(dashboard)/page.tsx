@@ -196,23 +196,23 @@ export default function DashboardOverview() {
   return (
     <div className="space-y-8">
       {/* Welcome Section */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+        <div className="space-y-1">
           <h2 className="text-2xl font-bold leading-7 text-gray-900 dark:text-white sm:truncate sm:text-3xl sm:tracking-tight">
             مرحباً، {user?.name || 'مستخدم'} 👋
           </h2>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             إليك ملخص ما يحدث في مشاريعك اليوم.
           </p>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 bg-white dark:bg-[#0f172a] px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-800">
-          <CalendarDays className="h-4 w-4" />
+        <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 bg-white dark:bg-[#0f172a] px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm self-start sm:self-center">
+          <CalendarDays className="h-4 w-4 text-indigo-500" />
           {format(new Date(), 'EEEE, dd MMMM yyyy', { locale: ar })}
         </div>
       </div>
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {statCards.map((card) => (
           <div
             key={card.name}

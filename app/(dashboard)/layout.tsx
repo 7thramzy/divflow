@@ -19,10 +19,13 @@ export default function DashboardLayout({
 
   useEffect(() => {
     setMounted(true);
-    if (!token && pathname !== "/login") {
+  }, []);
+
+  useEffect(() => {
+    if (mounted && !token && pathname !== "/login") {
       router.push("/login");
     }
-  }, [token, router, pathname]);
+  }, [mounted, token, router, pathname]);
 
   // Don't render until mounted to avoid hydration mismatch
   if (!mounted) {

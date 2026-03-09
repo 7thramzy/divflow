@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useAuthStore } from "@/lib/store";
-import { LogOut, Bell, User as UserIcon, X, Pin, MessageSquare } from "lucide-react";
+import { LogOut, Bell, User as UserIcon, X, Pin, MessageSquare, Menu } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import Link from "next/link";
@@ -11,7 +11,7 @@ import { format } from "date-fns";
 import { ar } from "date-fns/locale";
 
 export function Header() {
-  const { user, logout } = useAuthStore();
+  const { user, logout, toggleSidebar } = useAuthStore();
   const router = useRouter();
   const [showNotifications, setShowNotifications] = useState(false);
   const [notes, setNotes] = useState<InternalNote[]>([]);
@@ -66,6 +66,15 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-md px-4 sm:gap-x-6 sm:px-6 lg:px-8">
+      <button
+        type="button"
+        className="-m-2.5 p-2.5 text-gray-700 dark:text-gray-200 lg:hidden"
+        onClick={toggleSidebar}
+      >
+        <span className="sr-only">فتح القائمة الجانبية</span>
+        <Menu className="h-6 w-6" aria-hidden="true" />
+      </button>
+
       <div className="flex flex-1 justify-end gap-x-4 self-stretch lg:gap-x-6">
         <div className="flex items-center gap-x-4 lg:gap-x-6">
           
