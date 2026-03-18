@@ -30,8 +30,8 @@ export default function DashboardLayout({
   // Don't render until mounted to avoid hydration mismatch
   if (!mounted) {
     return (
-      <div className="flex h-screen w-full items-center justify-center bg-gray-50 dark:bg-[#020617]">
-        <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+      <div className="flex h-screen w-full items-center justify-center bg-gray-50 dark:bg-background">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -40,7 +40,7 @@ export default function DashboardLayout({
   if (!token) return null;
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-[#020617]">
+    <div className="flex h-screen bg-gray-50 dark:bg-background">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header />

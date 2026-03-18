@@ -2,25 +2,29 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import {
-  LayoutDashboard,
-  FolderKanban,
-  CheckSquare,
-  Clock,
-  MessageSquare,
-  CreditCard,
-  Settings,
-  X,
-  ChevronLeft,
-  ChevronRight,
-  Menu,
-} from "lucide-react";
+import { useRouter, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/lib/store";
+import { 
+  LayoutDashboard, 
+  Users, 
+  FolderKanban, 
+  CheckSquare, 
+  Clock, 
+  MessageSquare, 
+  CreditCard,
+  History,
+  Menu,
+  X,
+  ChevronRight,
+  ChevronLeft,
+  ShieldCheck,
+  LogOut
+} from "lucide-react";
 
 const navigation = [
   { name: "لوحة التحكم", href: "/dashboard", icon: LayoutDashboard },
+  { name: "العملاء", href: "/dashboard/customers", icon: Users },
   { name: "المشاريع", href: "/dashboard/projects", icon: FolderKanban },
   { name: "المهام", href: "/dashboard/tasks", icon: CheckSquare },
   { name: "سجلات الوقت", href: "/dashboard/time-logs", icon: Clock },
@@ -28,12 +32,45 @@ const navigation = [
   { name: "المدفوعات", href: "/dashboard/payouts", icon: CreditCard },
 ];
 
+const adminNavigation = [
+  { name: "الموظفون", href: "/dashboard/admin/users", icon: Users },
+  { name: "سجل العمليات", href: "/dashboard/admin/logs", icon: History },
+];
+
 export function Sidebar() {
+  const router = useRouter();
   const pathname = usePathname();
   const isSidebarOpen = useAuthStore((state) => state.isSidebarOpen);
   const setSidebarOpen = useAuthStore((state) => state.setSidebarOpen) || (() => {});
+  const { user, logout } = useAuthStore();
+  
+  const handleLogout = async () => {
+    try {
+      logout();
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout error", error);
+    }
+  };
 
-  // Safe mobile detection with useEffect to avoid hydration mismatch
+  const isAdmin = user?.roles?.includes("admin");
+  const isPM = user?.roles?.includes("pm") || user?.roles?.includes("unit_manager");
+  const isEmployee = user?.roles?.includes("employee");
+
+  const filteredNavigation = navigation.filter(item => {
+    if (isAdmin || isPM) return true;
+    if (isEmployee) {
+      return ["لوحة التحكم", "المهام", "سجلات الوقت", "الملاحظات"].includes(item.name);
+    }
+    return true;
+  }).map(item => {
+    if (isEmployee) {
+      if (item.name === "المهام") return { ...item, name: "مهامي" };
+      if (item.name === "سجلات الوقت") return { ...item, name: "سجلاتي" };
+    }
+    return item;
+  });
+
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -42,7 +79,6 @@ export function Sidebar() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Keyboard shortcut: Ctrl/Cmd + B
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "b") {
@@ -54,7 +90,6 @@ export function Sidebar() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isSidebarOpen, setSidebarOpen]);
 
-  // Touch swipe for mobile
   const touchStartX = React.useRef<number | null>(null);
   const touchCurrentX = React.useRef<number | null>(null);
   const SWIPE_THRESHOLD = 70;
@@ -70,7 +105,6 @@ export function Sidebar() {
   const onTouchEnd = () => {
     if (touchStartX.current !== null && touchCurrentX.current !== null) {
       const deltaX = touchCurrentX.current - touchStartX.current;
-      // RTL: swipe right (positive) = close, swipe left (negative) = open
       if (deltaX > SWIPE_THRESHOLD && isSidebarOpen) {
         setSidebarOpen(false);
       } else if (deltaX < -SWIPE_THRESHOLD && !isSidebarOpen) {
@@ -85,42 +119,26 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile menu button (visible when sidebar is closed on mobile) */}
       {isMobile && !isSidebarOpen && (
         <button
           onClick={toggleSidebar}
-          className="fixed top-4 right-4 z-50 p-2 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="fixed top-4 right-4 z-50 p-3 rounded-xl bg-card shadow-2xl border border-border text-foreground hover:bg-input transition-colors duration-200"
           aria-label="Open menu"
-          title="Open sidebar (Ctrl+B)"
         >
-          <Menu className="h-5 w-5" />
+          <Menu className="h-6 w-6 text-primary" />
         </button>
       )}
 
-      {/* Mobile Backdrop */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-gray-900/50 backdrop-blur-sm lg:hidden transition-opacity duration-300"
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-md lg:hidden transition-opacity duration-300"
           onClick={() => setSidebarOpen(false)}
-          aria-hidden="true"
         />
       )}
 
-      {/* Edge Swipe Zone for Mobile (to open when closed) */}
-      {!isSidebarOpen && isMobile && (
-        <div
-          className="fixed inset-y-0 right-0 z-40 w-8"
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-          aria-hidden="true"
-        />
-      )}
-
-      {/* Sidebar Container */}
       <div
         className={cn(
-          "fixed inset-y-0 right-0 z-50 flex h-full flex-col bg-white dark:bg-[#0f172a] border-l border-gray-200 dark:border-gray-800 transition-all duration-300 ease-in-out transform lg:static lg:translate-x-0 shadow-2xl lg:shadow-none touch-pan-y",
+          "fixed inset-y-0 right-0 z-50 flex h-full flex-col bg-card border-l border-border transition-all duration-300 ease-in-out transform lg:static lg:translate-x-0 shadow-2xl lg:shadow-none touch-pan-y",
           isSidebarOpen
             ? "w-72 translate-x-0"
             : "w-72 translate-x-full lg:w-20 lg:translate-x-0"
@@ -129,131 +147,98 @@ export function Sidebar() {
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
         role="navigation"
-        aria-label="Main sidebar"
       >
-        {/* Header with Logo and Toggle Button */}
-        <div
-          className={cn(
-            "flex h-16 shrink-0 items-center border-b border-gray-200 dark:border-gray-800 transition-all duration-300",
-            isSidebarOpen ? "px-4 justify-between" : "px-0 justify-center"
-          )}
-        >
+        <div className={cn("flex h-16 shrink-0 items-center border-b border-border transition-all duration-300", isSidebarOpen ? "px-6 justify-between" : "px-0 justify-center")}>
           <div className="flex items-center gap-3 overflow-hidden">
-            <div className="h-9 w-9 shrink-0 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 ring-2 ring-white/10 dark:ring-gray-800/50">
-              <span className="text-white font-bold text-lg leading-none">D</span>
+            <div className="h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/20 ring-1 ring-white/10">
+              <span className="text-white font-bold text-xl leading-none">D</span>
             </div>
             {isSidebarOpen && (
-              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 whitespace-nowrap animate-in fade-in slide-in-from-right-2 duration-300">
+              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent whitespace-nowrap animate-in fade-in slide-in-from-right-2 duration-300">
                 ديف فلو
               </span>
             )}
           </div>
 
-          {/* Toggle Button - adapts to state and screen */}
-          {(!isMobile || isSidebarOpen) && ( // Hide on mobile when closed (already have menu button)
+          {(!isMobile || isSidebarOpen) && (
             <button
               type="button"
               onClick={toggleSidebar}
-              className={cn(
-                "p-2 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95",
-                "text-gray-400 hover:text-gray-600 dark:hover:text-gray-200",
-                "hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
-              )}
-              aria-label={isSidebarOpen ? "Close sidebar" : "Open sidebar"}
-              title={`Toggle sidebar (Ctrl+B)`}
+              className={cn("p-2 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95 text-text-muted hover:text-foreground hover:bg-input focus:outline-none")}
             >
-              {isSidebarOpen ? (
-                // When open: on mobile show X, on desktop show chevron to collapse
-                isMobile ? (
-                  <X className="h-5 w-5" />
-                ) : (
-                  <ChevronRight className="h-5 w-5" />
-                )
-              ) : (
-                // When closed (desktop only, because on mobile we hide the button)
-                <ChevronLeft className="h-5 w-5" />
-              )}
+              {isSidebarOpen ? (isMobile ? <X className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />) : <ChevronLeft className="h-5 w-5" />}
             </button>
           )}
         </div>
 
-        {/* Navigation Links */}
-        <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden pt-6 px-3">
+        <div className="flex flex-1 flex-col overflow-y-auto overflow-x-hidden pt-6 px-4">
           <nav className="flex-1 space-y-2">
-            {navigation.map((item) => {
+            {filteredNavigation.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
               return (
                 <Link
                   key={item.name}
                   href={item.href}
                   title={!isSidebarOpen ? item.name : undefined}
-                  onClick={() => {
-                    if (isMobile) setSidebarOpen(false);
-                  }}
+                  onClick={() => { if (isMobile) setSidebarOpen(false); }}
                   className={cn(
-                    "group flex items-center h-11 transition-all duration-300 relative rounded-xl",
+                    "group flex items-center h-12 transition-all duration-300 relative rounded-xl my-1",
                     isSidebarOpen ? "px-4" : "justify-center",
-                    isActive
-                      ? "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400"
-                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white"
+                    isActive 
+                      ? "bg-primary/10 text-primary font-bold shadow-sm" 
+                      : "text-text-muted hover:bg-input hover:text-foreground"
                   )}
                 >
-                  <item.icon
-                    className={cn(
-                      "h-5 w-5 shrink-0 transition-all duration-200 group-hover:scale-110",
-                      isActive
-                        ? "text-indigo-600 dark:text-indigo-400"
-                        : "text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-200"
-                    )}
-                    aria-hidden="true"
-                  />
-                  {isSidebarOpen && (
-                    <span className="mr-3 text-sm font-medium whitespace-nowrap animate-in fade-in slide-in-from-right-2 duration-300">
-                      {item.name}
-                    </span>
-                  )}
-                  {isActive && !isSidebarOpen && (
-                    <div className="absolute right-0 w-1 h-6 bg-indigo-600 dark:bg-indigo-400 rounded-l-full" />
-                  )}
+                  <item.icon className={cn("h-5 w-5 shrink-0 transition-all duration-200 group-hover:scale-110", isActive ? "text-primary" : "text-text-muted group-hover:text-foreground")} />
+                  {isSidebarOpen && <span className="mr-3 text-sm whitespace-nowrap animate-in fade-in slide-in-from-right-2 duration-300">{item.name}</span>}
+                  {isActive && !isSidebarOpen && <div className="absolute right-0 w-1 h-6 bg-primary rounded-l-full shadow-[0_0_8px_rgba(255,117,15,0.5)]" />}
                 </Link>
               );
             })}
+
+            {isAdmin && (
+              <div className="pt-4 mt-4 border-t border-border">
+                {isSidebarOpen && <div className="px-4 mb-2 flex items-center gap-2 text-[10px] font-bold text-text-muted uppercase tracking-widest"><ShieldCheck className="h-3 w-3" /> الإدارة</div>}
+                {adminNavigation.map((item) => {
+                  const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      title={!isSidebarOpen ? item.name : undefined}
+                      onClick={() => { if (isMobile) setSidebarOpen(false); }}
+                      className={cn(
+                        "group flex items-center h-11 transition-all duration-300 relative rounded-xl mt-1",
+                        isSidebarOpen ? "px-4" : "justify-center",
+                        isActive 
+                          ? "bg-primary/10 text-primary font-bold" 
+                          : "text-text-muted hover:bg-input hover:text-foreground"
+                      )}
+                    >
+                      <item.icon className={cn("h-5 w-5 shrink-0 transition-all duration-200 group-hover:scale-110", isActive ? "text-primary" : "text-text-muted group-hover:text-foreground")} />
+                      {isSidebarOpen && <span className="mr-3 text-sm whitespace-nowrap animate-in fade-in slide-in-from-right-2 duration-300">{item.name}</span>}
+                      {isActive && !isSidebarOpen && <div className="absolute right-0 w-1 h-6 bg-primary rounded-l-full" />}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
           </nav>
         </div>
 
-        {/* Footer: Settings Link */}
-        <div className="flex shrink-0 border-t border-gray-200 dark:border-gray-800 p-3">
-          <Link
-            href="/settings"
-            title={!isSidebarOpen ? "الإعدادات" : undefined}
-            onClick={() => {
-              if (isMobile) setSidebarOpen(false);
-            }}
-            className={cn(
-              "group flex items-center h-11 w-full transition-all duration-300 relative rounded-xl",
-              isSidebarOpen ? "px-4" : "justify-center",
-              pathname === "/settings"
-                ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
-                : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white"
-            )}
-          >
-            <Settings
-              className={cn(
-                "h-5 w-5 transition-all duration-200 group-hover:scale-110",
-                pathname === "/settings"
-                  ? "text-gray-900 dark:text-white"
-                  : "text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-200"
-              )}
-            />
-            {isSidebarOpen && (
-              <span className="mr-3 text-sm font-medium whitespace-nowrap animate-in fade-in slide-in-from-right-2 duration-300">
-                الإعدادات
-              </span>
-            )}
-            {pathname === "/settings" && !isSidebarOpen && (
-              <div className="absolute right-0 w-1 h-6 bg-gray-600 dark:bg-gray-400 rounded-l-full" />
-            )}
-          </Link>
+        <div className="flex shrink-0 border-t border-border p-4">
+          <div className="w-full bg-black/40 rounded-2xl p-4 border border-white/5">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-10 w-10 shrink-0 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold border border-primary/20">{user?.name?.[0] || "A"}</div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-bold text-foreground truncate">{user?.name || "Admin User"}</p>
+                <p className="text-[10px] text-text-muted truncate">{user?.email || "admin@divflow.com"}</p>
+              </div>
+            </div>
+            <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-bold text-red-500 hover:bg-red-500/10 rounded-xl transition-all duration-200">
+              <LogOut className="h-3.5 w-3.5" /> تسجيل الخروج
+            </button>
+          </div>
         </div>
       </div>
     </>

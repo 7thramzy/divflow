@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Almarai, Tajawal } from "next/font/google";
 import "./globals.css";
 import { PWARegister } from "@/components/PWARegister";
 
@@ -11,6 +11,18 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const almarai = Almarai({
+  variable: "--font-almarai",
+  weight: ["300", "400", "700", "800"],
+  subsets: ["arabic"],
+});
+
+const tajawal = Tajawal({
+  variable: "--font-tajawal",
+  weight: ["200", "300", "400", "500", "700", "800", "900"],
+  subsets: ["arabic"],
 });
 
 export const metadata: Metadata = {
@@ -35,7 +47,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#4f46e5",
+  themeColor: "#FF750F",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -47,9 +59,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" suppressHydrationWarning>
+    <html lang="ar" dir="rtl" className="dark" style={{ colorScheme: 'dark' }} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${almarai.variable} ${tajawal.variable} antialiased`}
         suppressHydrationWarning
       >
         {children}

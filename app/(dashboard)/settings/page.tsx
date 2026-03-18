@@ -183,15 +183,15 @@ export default function SettingsPage() {
         {/* Left Sidebar (Tabs) */}
         <aside className="lg:w-1/4 space-y-6">
           {/* Profile Summary Card */}
-          <div className="bg-white dark:bg-[#0f172a] rounded-2xl border border-gray-200 dark:border-gray-800 p-6 text-center">
-            <div className="h-20 w-20 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-2xl font-bold text-white shadow-xl shadow-indigo-500/20 mx-auto">
+          <div className="bg-white dark:bg-[var(--card)] rounded-2xl border border-gray-200 dark:border-gray-800 p-6 text-center">
+            <div className="h-20 w-20 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-2xl font-bold text-white shadow-xl shadow-primary/20 mx-auto">
               {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
             </div>
             <h3 className="mt-4 font-bold text-gray-900 dark:text-white text-lg">{user?.name || 'مستخدم'}</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{user?.email}</p>
             <div className="flex gap-2 justify-center mt-3 flex-wrap">
               {user?.roles?.map((role) => (
-                <span key={role} className="inline-flex items-center rounded-full bg-indigo-50 dark:bg-indigo-500/10 px-2.5 py-0.5 text-xs font-medium text-indigo-700 dark:text-indigo-400 ring-1 ring-inset ring-indigo-600/10">
+                <span key={role} className="inline-flex items-center rounded-full bg-primary-light dark:bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary-hover dark:text-primary ring-1 ring-inset ring-primary/10">
                   {role}
                 </span>
               ))}
@@ -222,18 +222,18 @@ export default function SettingsPage() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`w-full flex items-start gap-4 p-4 rounded-2xl transition-all duration-200 text-right ${
                     isActive 
-                      ? 'bg-indigo-50 dark:bg-indigo-500/10 ring-1 ring-indigo-200 dark:ring-indigo-500/30' 
+                      ? 'bg-primary-light dark:bg-primary/10 ring-1 ring-indigo-200 dark:ring-primary/30' 
                       : 'hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:ring-1 hover:ring-gray-200 dark:hover:ring-gray-800'
                   }`}
                 >
-                  <div className={`mt-0.5 p-2 rounded-lg ${isActive ? 'bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400' : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400'}`}>
+                  <div className={`mt-0.5 p-2 rounded-lg ${isActive ? 'bg-indigo-100 dark:bg-primary/20 text-primary dark:text-primary' : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400'}`}>
                     <tab.icon className="h-5 w-5" />
                   </div>
                   <div>
                     <h3 className={`font-semibold text-sm ${isActive ? 'text-indigo-900 dark:text-indigo-200' : 'text-gray-900 dark:text-gray-200'}`}>
                       {tab.name}
                     </h3>
-                    <p className={`text-xs mt-1 ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>
+                    <p className={`text-xs mt-1 ${isActive ? 'text-primary dark:text-primary' : 'text-gray-500 dark:text-gray-400'}`}>
                       {tab.description}
                     </p>
                   </div>
@@ -245,7 +245,7 @@ export default function SettingsPage() {
 
         {/* Right Content */}
         <div className="lg:w-3/4">
-          <div className="bg-white dark:bg-[#0f172a] shadow-sm rounded-3xl border border-gray-200 dark:border-gray-800 overflow-hidden ring-1 ring-black/[0.02] dark:ring-white/[0.02]">
+          <div className="bg-white dark:bg-[var(--card)] shadow-sm rounded-3xl border border-gray-200 dark:border-gray-800 overflow-hidden ring-1 ring-black/[0.02] dark:ring-white/[0.02]">
             {activeTab === "profile" && (
               <form onSubmit={handleProfileSave} className="divide-y divide-gray-100 dark:divide-gray-800">
                 <div className="p-8">
@@ -263,7 +263,7 @@ export default function SettingsPage() {
                         <input
                           type="text"
                           required
-                          className="block w-full rounded-xl border-0 py-2.5 pr-10 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-gray-50 dark:bg-[#0f172a]"
+                          className="block w-full rounded-xl border-0 py-2.5 pr-10 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-gray-50 dark:bg-[var(--card)]"
                           value={profileData.name}
                           onChange={(e) => setProfileData({...profileData, name: e.target.value})}
                         />
@@ -296,7 +296,7 @@ export default function SettingsPage() {
                         </div>
                         <input
                           type="tel"
-                          className="block w-full rounded-xl border-0 py-2.5 pr-10 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-gray-50 dark:bg-[#0f172a]"
+                          className="block w-full rounded-xl border-0 py-2.5 pr-10 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-gray-50 dark:bg-[var(--card)]"
                           value={profileData.phone}
                           onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
                         />
@@ -312,7 +312,7 @@ export default function SettingsPage() {
                         </div>
                         <div className="block w-full rounded-xl border-0 py-2.5 pr-10 pl-3 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 sm:text-sm sm:leading-6 bg-gray-50/50 dark:bg-gray-800/50 cursor-not-allowed opacity-70 flex gap-2 min-h-[42px] items-center">
                            {user?.roles?.map((role) => (
-                             <span key={role} className="inline-flex items-center rounded-md bg-indigo-50 dark:bg-indigo-500/10 px-2 py-0.5 text-xs font-medium text-indigo-700 dark:text-indigo-400 ring-1 ring-inset ring-indigo-600/10">
+                             <span key={role} className="inline-flex items-center rounded-md bg-primary-light dark:bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary-hover dark:text-primary ring-1 ring-inset ring-primary/10">
                                {role}
                              </span>
                            ))}
@@ -333,7 +333,7 @@ export default function SettingsPage() {
                   )}
                 </div>
                 <div className="p-6 bg-gray-50 dark:bg-gray-900/30 flex items-center justify-end gap-3 rounded-b-3xl">
-                  <button type="submit" disabled={isSaving} className="px-5 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-xl hover:bg-indigo-500 shadow-lg shadow-indigo-500/30 transition-all flex items-center gap-2 disabled:opacity-50">
+                  <button type="submit" disabled={isSaving} className="px-5 py-2.5 bg-primary text-white text-sm font-medium rounded-xl hover:bg-primary shadow-lg shadow-primary/30 transition-all flex items-center gap-2 disabled:opacity-50">
                     <Save className="h-4 w-4" />
                     {isSaving ? 'جاري الحفظ...' : 'حفظ التغييرات'}
                   </button>
@@ -354,7 +354,7 @@ export default function SettingsPage() {
                         <input 
                           type={showCurrentPass ? "text" : "password"} 
                           required 
-                          className="block w-full rounded-xl border-0 py-2.5 px-3 pr-10 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-gray-50 dark:bg-[#0f172a]" 
+                          className="block w-full rounded-xl border-0 py-2.5 px-3 pr-10 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-gray-50 dark:bg-[var(--card)]" 
                           value={passwordData.current_password}
                           onChange={(e) => setPasswordData({...passwordData, current_password: e.target.value})}
                         />
@@ -370,7 +370,7 @@ export default function SettingsPage() {
                           type={showNewPass ? "text" : "password"} 
                           required 
                           minLength={6}
-                          className="block w-full rounded-xl border-0 py-2.5 px-3 pr-10 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-gray-50 dark:bg-[#0f172a]" 
+                          className="block w-full rounded-xl border-0 py-2.5 px-3 pr-10 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-gray-50 dark:bg-[var(--card)]" 
                           value={passwordData.password}
                           onChange={(e) => setPasswordData({...passwordData, password: e.target.value})}
                         />
@@ -388,7 +388,7 @@ export default function SettingsPage() {
                         <input 
                           type={showConfirmPass ? "text" : "password"} 
                           required 
-                          className="block w-full rounded-xl border-0 py-2.5 px-3 pr-10 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-gray-50 dark:bg-[#0f172a]" 
+                          className="block w-full rounded-xl border-0 py-2.5 px-3 pr-10 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-gray-50 dark:bg-[var(--card)]" 
                           value={passwordData.password_confirmation}
                           onChange={(e) => setPasswordData({...passwordData, password_confirmation: e.target.value})}
                         />
@@ -403,7 +403,7 @@ export default function SettingsPage() {
                   </div>
                 </div>
                 <div className="p-6 bg-gray-50 dark:bg-gray-900/30 flex items-center justify-end gap-3 rounded-b-3xl">
-                  <button type="submit" disabled={isSaving} className="px-5 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-xl hover:bg-indigo-500 shadow-lg shadow-indigo-500/30 transition-all flex items-center gap-2 disabled:opacity-50">
+                  <button type="submit" disabled={isSaving} className="px-5 py-2.5 bg-primary text-white text-sm font-medium rounded-xl hover:bg-primary shadow-lg shadow-primary/30 transition-all flex items-center gap-2 disabled:opacity-50">
                     <Lock className="h-4 w-4" />
                     {isSaving ? 'جاري التحديث...' : 'تحديث كلمة المرور'}
                   </button>
@@ -437,7 +437,7 @@ export default function SettingsPage() {
                              checked={notifications[item.key]}
                              onChange={() => setNotifications({ ...notifications, [item.key]: !notifications[item.key] })}
                            />
-                           <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 rounded-full peer dark:bg-gray-700 peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-600"></div>
+                           <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 rounded-full peer dark:bg-gray-700 peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
                          </label>
                       </div>
                     ))}
@@ -451,18 +451,18 @@ export default function SettingsPage() {
                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">اختر المظهر المفضل لك.</p>
                 
                 <div className="grid grid-cols-2 gap-4 max-w-md">
-                   <button type="button" className="border-[2px] border-indigo-600 rounded-xl p-4 cursor-pointer text-center bg-indigo-50 dark:bg-indigo-900/20 transition-all hover:shadow-md">
+                   <button type="button" className="border-[2px] border-primary rounded-xl p-4 cursor-pointer text-center bg-primary-light dark:bg-indigo-900/20 transition-all hover:shadow-md">
                       <div className="h-24 w-full bg-white dark:bg-gray-100 rounded-lg shadow-sm border border-gray-100 mb-3 flex items-center justify-center overflow-hidden">
                         <div className="w-full h-full flex">
                           <div className="w-1/4 bg-gray-50 border-r border-gray-100"></div>
                           <div className="flex-1 p-2 space-y-1.5">
                             <div className="h-2 w-3/4 bg-gray-200 rounded"></div>
                             <div className="h-2 w-1/2 bg-gray-100 rounded"></div>
-                            <div className="h-6 w-full bg-indigo-50 rounded mt-2"></div>
+                            <div className="h-6 w-full bg-primary-light rounded mt-2"></div>
                           </div>
                         </div>
                       </div>
-                      <span className="text-sm font-semibold text-indigo-700 dark:text-indigo-400">فاتح (افتراضي)</span>
+                      <span className="text-sm font-semibold text-primary-hover dark:text-primary">فاتح (افتراضي)</span>
                    </button>
                    <button type="button" className="border-[2px] border-transparent hover:border-gray-300 dark:hover:border-gray-700 rounded-xl p-4 cursor-pointer text-center transition-all hover:shadow-md">
                       <div className="h-24 w-full bg-gray-900 rounded-lg shadow-sm mb-3 border border-gray-800 flex items-center justify-center overflow-hidden">

@@ -73,15 +73,15 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#020617] relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[var(--background)] relative overflow-hidden">
       {/* Dynamic Background Elements */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-500/20 blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-500/20 blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse pointer-events-none" />
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/20 blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-primary/20 blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse pointer-events-none" />
 
       <div className="w-full max-w-md p-8 relative z-10">
         <div className="glass rounded-2xl shadow-xl p-8 border border-white/20 dark:border-white/10 relative overflow-hidden bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           
-          <Link href="/login" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 transition-colors mb-6">
+          <Link href="/login" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors mb-6">
             <ArrowRight className="h-4 w-4 ml-1" />
             العودة لتسجيل الدخول
           </Link>
@@ -122,7 +122,7 @@ export default function ForgotPasswordPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="w-full pr-10 pl-4 py-2 bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-800 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all dark:text-white"
+                      className="w-full pr-10 pl-4 py-2 bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-800 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all dark:text-white"
                       placeholder="admin@example.com"
                       dir="ltr"
                     />
@@ -131,7 +131,7 @@ export default function ForgotPasswordPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full flex items-center justify-center py-2.5 px-4 rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-md"
+                  className="w-full flex items-center justify-center py-2.5 px-4 rounded-lg text-white bg-primary hover:bg-primary-hover transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-md"
                 >
                   {isLoading ? <Loader2 className="animate-spin h-5 w-5" /> : "إرسال الرمز"}
                 </button>
@@ -151,7 +151,7 @@ export default function ForgotPasswordPage() {
                       value={otp}
                       onChange={(e) => setOtp(e.target.value)}
                       required
-                      className="w-full pr-10 pl-4 py-2 text-center tracking-[0.2em] font-mono text-lg bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-800 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all dark:text-white"
+                      className="w-full pr-10 pl-4 py-2 text-center tracking-[0.2em] font-mono text-lg bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-800 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all dark:text-white"
                       placeholder="000000"
                       dir="ltr"
                       maxLength={6}
@@ -161,7 +161,7 @@ export default function ForgotPasswordPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full flex items-center justify-center py-2.5 px-4 rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-md"
+                  className="w-full flex items-center justify-center py-2.5 px-4 rounded-lg text-white bg-primary hover:bg-primary-hover transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-md"
                 >
                   {isLoading ? <Loader2 className="animate-spin h-5 w-5" /> : "تحقق من الرمز"}
                 </button>
@@ -181,7 +181,7 @@ export default function ForgotPasswordPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className="w-full pr-10 pl-4 py-2 bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-800 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all dark:text-white"
+                      className="w-full pr-10 pl-4 py-2 bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-800 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all dark:text-white"
                       placeholder="••••••••"
                       dir="ltr"
                       minLength={8}
@@ -199,7 +199,7 @@ export default function ForgotPasswordPage() {
                       value={passwordConfirmation}
                       onChange={(e) => setPasswordConfirmation(e.target.value)}
                       required
-                      className="w-full pr-10 pl-4 py-2 bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-800 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all dark:text-white"
+                      className="w-full pr-10 pl-4 py-2 bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-800 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all dark:text-white"
                       placeholder="••••••••"
                       dir="ltr"
                       minLength={8}
@@ -209,7 +209,7 @@ export default function ForgotPasswordPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full flex items-center justify-center py-2.5 px-4 rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-md"
+                  className="w-full flex items-center justify-center py-2.5 px-4 rounded-lg text-white bg-primary hover:bg-primary-hover transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-md"
                 >
                   {isLoading ? <Loader2 className="animate-spin h-5 w-5" /> : "تغيير كلمة المرور"}
                 </button>
@@ -223,7 +223,7 @@ export default function ForgotPasswordPage() {
                 </div>
                 <button
                   onClick={() => router.push("/login")}
-                  className="w-full flex items-center justify-center py-2.5 px-4 rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all shadow-md"
+                  className="w-full flex items-center justify-center py-2.5 px-4 rounded-lg text-white bg-primary hover:bg-primary-hover transition-all shadow-md"
                 >
                   العودة لتسجيل الدخول
                 </button>

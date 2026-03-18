@@ -41,17 +41,17 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#020617] relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-background relative overflow-hidden">
       {/* Dynamic Background Elements */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-500/20 blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-500/20 blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse pointer-events-none" />
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/20 blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-accent/20 blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-pulse pointer-events-none" />
 
       <div className="w-full max-w-md p-8 relative z-10">
         <div className="glass rounded-2xl shadow-xl p-8 border border-white/20 dark:border-white/10 relative overflow-hidden">
           
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
               ديف فلو (DivFlow)
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
@@ -79,7 +79,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full pr-10 pl-4 py-2 bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-800 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all dark:text-white text-right"
+                  className="w-full pr-10 pl-4 py-2 bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-800 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all dark:text-white text-right"
                   placeholder="admin@example.com"
                   dir="ltr"
                 />
@@ -91,7 +91,7 @@ export default function LoginPage() {
                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   كلمة المرور
                 </label>
-                <Link href="/forgot-password" className="text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 transition-colors">
+                <Link href="/forgot-password" className="text-xs text-primary hover:text-accent transition-colors">
                   نسيت كلمة المرور؟
                 </Link>
               </div>
@@ -104,7 +104,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full pr-10 pl-4 py-2 bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-800 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all dark:text-white text-right"
+                  className="w-full pr-10 pl-4 py-2 bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-800 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all dark:text-white text-right"
                   placeholder="••••••••"
                   dir="ltr"
                 />
@@ -114,7 +114,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex items-center justify-center py-2.5 px-4 rounded-lg text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:focus:ring-indigo-800 font-medium transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-indigo-500/30"
+              className="w-full flex items-center justify-center py-2.5 px-4 rounded-lg text-white bg-gradient-to-r from-primary to-accent hover:opacity-90 focus:ring-4 focus:outline-none focus:ring-primary/20 font-medium transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-primary/30"
             >
               {isLoading ? (
                 <>

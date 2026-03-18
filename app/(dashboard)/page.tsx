@@ -17,22 +17,9 @@ import {
   Activity,
   CalendarDays
 } from "lucide-react";
-import { Project, Task, TimeLog, InternalPayout } from "@/lib/types";
+import { Project, Task, TimeLog, InternalPayout, DashboardStats, FinancialSummary } from "@/lib/types";
 import { format } from "date-fns";
 import { ar } from "date-fns/locale";
-
-interface DashboardStats {
-  total_projects: number;
-  active_projects: number;
-  total_tasks: number;
-  completed_tasks: number;
-  total_users: number;
-}
-
-interface FinancialSummary {
-  total_payouts: number;
-  pending_payments?: number;
-}
 
 export default function DashboardOverview() {
   const { user } = useAuthStore();
@@ -72,28 +59,24 @@ export default function DashboardOverview() {
 
         if (isAdmin) {
           const [statsRes, finRes] = await Promise.all([
-            api.get("/admin/dashboard/stats").catch(() => ({ data: { total_projects: projectsData.length, active_projects: projectsData.filter(p => p.status === 'active').length, total_tasks: tasksData.length, completed_tasks: tasksData.filter(t => t.status === 'completed').length, total_users: 0 } })),
-            api.get("/admin/dashboard/financial-summary").catch(() => ({ data: { total_payouts: payoutsData.reduce((sum, p) => sum + (p.amount_paid || 0), 0) } })),
+            api.get<DashboardStats>("/admin/dashboard/stats").catch(() => ({ data: { projects_count: projectsData.length, tasks_count: tasksData.length, customers_count: 0, internal_notes_count: 0, total_payouts: 0, remaining_payouts: 0 } as DashboardStats })),
+            api.get<FinancialSummary>("/admin/dashboard/financial-summary").catch(() => ({ data: { total_revenue: 0, total_cost: 0, gross_profit: 0, net_profit: 0 } as FinancialSummary })),
           ]);
           setStats(statsRes.data);
           setFinancials(finRes.data);
         } else {
-          const activeProjects = projectsData.filter((p) => p.status === 'active').length;
-          const completedTasks = tasksData.filter((t) => t.status === 'completed').length;
-          
           setStats({ 
-            total_projects: projectsData.length, 
-            active_projects: activeProjects, 
-            total_tasks: tasksData.length, 
-            completed_tasks: completedTasks, 
-            total_users: 0
+            projects_count: projectsData.length, 
+            tasks_count: tasksData.length,
+            customers_count: 0,
+            internal_notes_count: 0,
+            total_payouts: payoutsData.reduce((sum, p) => sum + (p.amount_paid || 0), 0),
+            remaining_payouts: 0
           });
           
           if (user?.id) {
-            const payoutRes = await api.get(`/users/${user.id}/payout-summary`).catch(() => ({ data: { total_payouts: payoutsData.reduce((sum, p) => sum + (p.amount_paid || 0), 0) } }));
-            setFinancials({ total_payouts: payoutRes.data.total_payouts || payoutRes.data.total || 0 });
-          } else {
-            setFinancials({ total_payouts: payoutsData.reduce((sum, p) => sum + (p.amount_paid || 0), 0) });
+            const payoutRes = await api.get(`/users/${user.id}/payout-summary`).catch(() => ({ data: { total_payouts: 0, remaining: 0 } }));
+            setFinancials({ total_revenue: 0, total_cost: 0, gross_profit: 0, net_profit: payoutRes.data.total_payouts || 0 });
           }
         }
 
@@ -113,15 +96,15 @@ export default function DashboardOverview() {
   if (isLoading) {
     return (
       <div className="space-y-6 animate-pulse">
-        <div className="h-8 w-64 bg-gray-200 dark:bg-gray-800 rounded"></div>
+        <div className="h-8 w-64 bg-border rounded"></div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-32 bg-gray-200 dark:bg-gray-800 rounded-xl"></div>
+            <div key={i} className="h-32 bg-card border border-border rounded-2xl"></div>
           ))}
         </div>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <div className="h-64 bg-gray-200 dark:bg-gray-800 rounded-xl"></div>
-          <div className="h-64 bg-gray-200 dark:bg-gray-800 rounded-xl"></div>
+          <div className="h-64 bg-card border border-border rounded-2xl"></div>
+          <div className="h-64 bg-card border border-border rounded-2xl"></div>
         </div>
       </div>
     );
@@ -129,54 +112,53 @@ export default function DashboardOverview() {
 
   const pendingTasks = allTasks.filter(t => t.status === 'pending').length;
   const inProgressTasks = allTasks.filter(t => t.status === 'in_progress').length;
-  const completedTasks = stats?.completed_tasks || 0;
-  const totalTasks = stats?.total_tasks || 0;
+  const completedTasks = allTasks.filter(t => t.status === 'completed').length;
+  const totalTasks = stats?.tasks_count || allTasks.length;
   const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
-  const totalLoggedHours = recentTimeLogs.reduce((sum, l) => sum + (l.actual_hours || 0), 0);
 
   const statCards = [
     {
       name: "إجمالي المشاريع",
-      value: stats?.total_projects || 0,
-      subtitle: `${stats?.active_projects || 0} نشط`,
+      value: stats?.projects_count || 0,
+      subtitle: `${allTasks.filter(t => t.status === 'in_progress').length} مهام نشطة`,
       icon: FolderKanban,
-      color: "text-blue-600 dark:text-blue-400",
-      bg: "bg-blue-100 dark:bg-blue-900/30",
-      borderColor: "border-blue-200 dark:border-blue-800",
+      color: "text-primary",
+      bg: "bg-primary/10",
+      borderColor: "border-primary/20",
     },
     {
       name: "إجمالي المهام",
-      value: stats?.total_tasks || 0,
+      value: stats?.tasks_count || 0,
       subtitle: `${completedTasks} مكتمل`,
       icon: ListTodo,
-      color: "text-emerald-600 dark:text-emerald-400",
-      bg: "bg-emerald-100 dark:bg-emerald-900/30",
-      borderColor: "border-emerald-200 dark:border-emerald-800",
+      color: "text-emerald-500",
+      bg: "bg-emerald-500/10",
+      borderColor: "border-emerald-500/20",
     },
     {
       name: "إجمالي المدفوعات",
-      value: `$${(financials?.total_payouts || 0).toLocaleString()}`,
-      subtitle: `${recentPayouts.length} دفعة أخيرة`,
+      value: `$${(stats?.total_payouts || 0).toLocaleString()}`,
+      subtitle: `بانتظار $${(stats?.remaining_payouts || 0).toLocaleString()}`,
       icon: Banknote,
-      color: "text-indigo-600 dark:text-indigo-400",
-      bg: "bg-indigo-100 dark:bg-indigo-900/30",
-      borderColor: "border-indigo-200 dark:border-indigo-800",
+      color: "text-accent",
+      bg: "bg-accent/10",
+      borderColor: "border-accent/20",
     },
     {
-      name: "نسبة الإنجاز",
-      value: `${completionRate}%`,
-      subtitle: `${totalLoggedHours.toFixed(1)} ساعة مسجلة`,
-      icon: TrendingUp,
-      color: "text-purple-600 dark:text-purple-400",
-      bg: "bg-purple-100 dark:bg-purple-900/30",
-      borderColor: "border-purple-200 dark:border-purple-800",
+      name: "العملاء والملاحظات",
+      value: stats?.customers_count || 0,
+      subtitle: `${stats?.internal_notes_count || 0} ملاحظة داخلية`,
+      icon: Users,
+      color: "text-primary",
+      bg: "bg-primary/10",
+      borderColor: "border-primary/20",
     },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'active': return 'bg-emerald-500';
-      case 'completed': return 'bg-blue-500';
+      case 'completed': return 'bg-primary';
       case 'on_hold': return 'bg-amber-500';
       default: return 'bg-gray-500';
     }
@@ -194,106 +176,131 @@ export default function DashboardOverview() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pb-10">
       {/* Welcome Section */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
         <div className="space-y-1">
-          <h2 className="text-2xl font-bold leading-7 text-gray-900 dark:text-white sm:truncate sm:text-3xl sm:tracking-tight">
+          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
             مرحباً، {user?.name || 'مستخدم'} 👋
           </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-text-muted">
             إليك ملخص ما يحدث في مشاريعك اليوم.
           </p>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 bg-white dark:bg-[#0f172a] px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm self-start sm:self-center">
-          <CalendarDays className="h-4 w-4 text-indigo-500" />
+        <div className="flex items-center gap-2 text-sm text-text-muted bg-card px-5 py-2.5 rounded-2xl border border-border shadow-sm">
+          <CalendarDays className="h-4 w-4 text-primary" />
           {format(new Date(), 'EEEE, dd MMMM yyyy', { locale: ar })}
         </div>
       </div>
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {statCards.map((card) => (
           <div
             key={card.name}
-            className={`overflow-hidden rounded-2xl bg-white dark:bg-[#0f172a] p-6 shadow-sm border ${card.borderColor} transition-all hover:shadow-lg hover:-translate-y-0.5 duration-300`}
+            className={`stat-card relative overflow-hidden rounded-2xl bg-card p-6 shadow-sm border ${card.borderColor} transition-all duration-300`}
           >
-            <div className="flex items-start justify-between">
+            <div className="flex items-start justify-between relative z-10">
               <div>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                <p className="text-sm font-medium text-text-muted">
                   {card.name}
                 </p>
-                <p className="text-3xl font-bold text-gray-900 dark:text-white mt-2">
+                <p className="text-3xl font-bold text-foreground mt-2 tracking-tight">
                   {card.value}
                 </p>
-                <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-                  {card.subtitle}
-                </p>
+                <div className="flex items-center gap-1.5 mt-2">
+                   <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                   <p className="text-[10px] font-medium text-text-muted uppercase tracking-wider">
+                     {card.subtitle}
+                   </p>
+                </div>
               </div>
-              <div className={`p-3 rounded-xl ${card.bg}`}>
+              <div className={`p-3.5 rounded-xl ${card.bg} shadow-inner`}>
                 <card.icon className={`h-6 w-6 ${card.color}`} />
               </div>
             </div>
+            {/* Subtle background glow */}
+            <div className={`absolute -right-4 -bottom-4 w-24 h-24 rounded-full opacity-5 blur-3xl ${card.bg}`} />
           </div>
         ))}
       </div>
 
       {/* Task Progress Overview */}
       {totalTasks > 0 && (
-        <div className="rounded-2xl bg-white dark:bg-[#0f172a] p-6 shadow-sm border border-gray-200 dark:border-gray-800">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">تقدم المهام</h3>
-          <div className="flex items-center gap-6 flex-wrap">
-            <div className="flex-1 min-w-[200px]">
-              <div className="h-4 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden flex">
-                {completedTasks > 0 && (
-                  <div className="bg-emerald-500 h-full transition-all duration-700" style={{ width: `${(completedTasks / totalTasks) * 100}%` }} title={`مكتمل: ${completedTasks}`} />
-                )}
-                {inProgressTasks > 0 && (
-                  <div className="bg-amber-500 h-full transition-all duration-700" style={{ width: `${(inProgressTasks / totalTasks) * 100}%` }} title={`قيد التنفيذ: ${inProgressTasks}`} />
-                )}
-                {pendingTasks > 0 && (
-                  <div className="bg-gray-300 dark:bg-gray-600 h-full transition-all duration-700" style={{ width: `${(pendingTasks / totalTasks) * 100}%` }} title={`قيد الانتظار: ${pendingTasks}`} />
-                )}
-              </div>
+        <div className="rounded-2xl bg-card p-6 shadow-sm border border-border relative overflow-hidden">
+          <div className="flex items-center justify-between mb-6">
+             <h3 className="text-lg font-bold text-foreground">تقدم المهام</h3>
+             <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">{completionRate}% مكتمل</span>
+          </div>
+          <div className="space-y-6">
+            <div className="h-3 bg-white/5 rounded-full overflow-hidden flex shadow-inner">
+              {completedTasks > 0 && (
+                <div className="bg-primary h-full transition-all duration-1000 shadow-[0_0_10px_rgba(255,117,15,0.3)]" style={{ width: `${(completedTasks / totalTasks) * 100}%` }} />
+              )}
+              {inProgressTasks > 0 && (
+                <div className="bg-accent h-full transition-all duration-1000 opacity-80" style={{ width: `${(inProgressTasks / totalTasks) * 100}%` }} />
+              )}
+              {pendingTasks > 0 && (
+                <div className="bg-white/10 h-full transition-all duration-1000" style={{ width: `${(pendingTasks / totalTasks) * 100}%` }} />
+              )}
             </div>
-            <div className="flex items-center gap-4 text-xs font-medium">
-              <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-emerald-500" /> مكتمل ({completedTasks})</span>
-              <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-amber-500" /> قيد التنفيذ ({inProgressTasks})</span>
-              <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-gray-300 dark:bg-gray-600" /> قيد الانتظار ({pendingTasks})</span>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+               <div className="p-3 bg-white/5 rounded-xl border border-white/5">
+                  <p className="text-[10px] text-text-muted uppercase mb-1">المجموع</p>
+                  <p className="text-lg font-bold text-foreground">{totalTasks}</p>
+               </div>
+               <div className="p-3 bg-white/5 rounded-xl border border-white/5">
+                  <p className="text-[10px] text-emerald-500 uppercase mb-1">مكتمل</p>
+                  <p className="text-lg font-bold text-foreground">{completedTasks}</p>
+               </div>
+               <div className="p-3 bg-white/5 rounded-xl border border-white/5">
+                  <p className="text-[10px] text-accent uppercase mb-1">قيد التنفيذ</p>
+                  <p className="text-lg font-bold text-foreground">{inProgressTasks}</p>
+               </div>
+               <div className="p-3 bg-white/5 rounded-xl border border-white/5">
+                  <p className="text-[10px] text-text-muted uppercase mb-1">بالانتظار</p>
+                  <p className="text-lg font-bold text-foreground">{pendingTasks}</p>
+               </div>
             </div>
           </div>
         </div>
       )}
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Recent Projects */}
-        <div className="rounded-2xl bg-white dark:bg-[#0f172a] shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-              <FolderKanban className="h-5 w-5 text-blue-500" /> أحدث المشاريع
-            </h3>
-            <Link href="/dashboard/projects" className="text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:underline flex items-center gap-1">
-              عرض الكل <ArrowUpRight className="h-3 w-3" />
+        <div className="rounded-2xl bg-card shadow-sm border border-border overflow-hidden flex flex-col">
+          <div className="px-6 py-5 border-b border-border flex items-center justify-between bg-white/5">
+            <div className="flex items-center gap-3">
+               <div className="p-2 bg-primary/10 rounded-lg">
+                  <FolderKanban className="h-5 w-5 text-primary" />
+               </div>
+               <h3 className="text-lg font-bold text-foreground">أحدث المشاريع</h3>
+            </div>
+            <Link href="/dashboard/projects" className="text-xs font-bold text-primary hover:text-accent transition-colors flex items-center gap-1.5">
+              عرض الكل <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>
           </div>
           {recentProjects.length > 0 ? (
-            <div className="divide-y divide-gray-50 dark:divide-gray-800/50">
+            <div className="divide-y divide-border">
               {recentProjects.map((project) => (
-                <div key={project.id} className="px-6 py-4 flex items-center justify-between hover:bg-gray-50/50 dark:hover:bg-gray-800/20 transition-colors">
-                  <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <div className={`h-2.5 w-2.5 rounded-full shrink-0 ${getStatusColor(project.status)}`} />
+                <div key={project.id} className="px-6 py-5 flex items-center justify-between hover:bg-white/5 transition-all group">
+                  <div className="flex items-center gap-4 min-w-0 flex-1">
+                    <div className={`h-2.5 w-2.5 rounded-full shrink-0 shadow-[0_0_8px_currentColor] ${getStatusColor(project.status).replace('bg-', 'text-')}`} />
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{project.project_name}</p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">{project.description || 'لا يوجد وصف'}</p>
+                      <p className="text-sm font-bold text-foreground group-hover:text-primary transition-colors truncate">{project.project_name}</p>
+                      <p className="text-[10px] text-text-muted mt-1 truncate max-w-xs">{project.description || 'لا يوجد وصف متاح'}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 shrink-0 mr-3">
-                    <span className="text-xs text-gray-400 dark:text-gray-500">${project.internal_budget?.toLocaleString() || '0'}</span>
-                    <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                      project.status === 'active' ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400' :
-                      project.status === 'completed' ? 'bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400' :
-                      'bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400'
+                  <div className="flex items-center gap-4 shrink-0 mr-4">
+                    <div className="text-left">
+                       <p className="text-xs font-bold text-foreground">${project.internal_budget?.toLocaleString()}</p>
+                       <p className="text-[9px] text-text-muted uppercase text-right">الميزانية</p>
+                    </div>
+                    <span className={`inline-flex items-center rounded-lg px-2.5 py-1 text-[10px] font-bold ${
+                      project.status === 'in_progress' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' :
+                      project.status === 'completed' ? 'bg-primary/10 text-primary border border-primary/20' :
+                      'bg-amber-500/10 text-amber-500 border border-amber-500/20'
                     }`}>
                       {getStatusText(project.status)}
                     </span>
@@ -302,134 +309,59 @@ export default function DashboardOverview() {
               ))}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center h-48 text-center p-6">
-              <AlertCircle className="h-8 w-8 text-gray-300 dark:text-gray-600 mb-2" />
-              <p className="text-sm text-gray-500 dark:text-gray-400">لم يتم العثور على مشاريع.</p>
+            <div className="flex flex-col items-center justify-center py-16 text-center">
+              <div className="p-4 bg-white/5 rounded-full mb-4">
+                 <AlertCircle className="h-8 w-8 text-text-muted" />
+              </div>
+              <p className="text-sm font-medium text-text-muted">لا توجد مشاريع حالية</p>
             </div>
           )}
         </div>
 
-        {/* Priority / Pending Tasks */}
-        <div className="rounded-2xl bg-white dark:bg-[#0f172a] shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-              <CheckSquare className="h-5 w-5 text-red-500" /> المهام المعلقة
-            </h3>
-            <Link href="/dashboard/tasks" className="text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:underline flex items-center gap-1">
-              عرض الكل <ArrowUpRight className="h-3 w-3" />
+        {/* Priority tasks */}
+        <div className="rounded-2xl bg-card shadow-sm border border-border overflow-hidden flex flex-col">
+          <div className="px-6 py-5 border-b border-border flex items-center justify-between bg-white/5">
+            <div className="flex items-center gap-3">
+               <div className="p-2 bg-red-500/10 rounded-lg">
+                  <CheckSquare className="h-5 w-5 text-red-500" />
+               </div>
+               <h3 className="text-lg font-bold text-foreground">المهام العاجلة</h3>
+            </div>
+            <Link href="/dashboard/tasks" className="text-xs font-bold text-primary hover:text-accent transition-colors flex items-center gap-1.5">
+              عرض الكل <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>
           </div>
           {priorityTasks.length > 0 ? (
-            <div className="divide-y divide-gray-50 dark:divide-gray-800/50">
+            <div className="divide-y divide-border">
               {priorityTasks.map((task) => (
-                <div key={task.id} className="px-6 py-4 flex items-center justify-between hover:bg-gray-50/50 dark:hover:bg-gray-800/20 transition-colors">
+                <div key={task.id} className="px-6 py-5 flex items-center justify-between hover:bg-white/5 transition-all group">
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{task.title}</p>
-                    <div className="flex items-center gap-3 mt-1">
-                      <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                        <Clock className="h-3 w-3" /> {task.estimated_hours || 0} ساعة
+                    <p className="text-sm font-bold text-foreground group-hover:text-primary transition-colors truncate">{task.title}</p>
+                    <div className="flex items-center gap-4 mt-1.5">
+                      <span className="text-[10px] font-medium text-text-muted flex items-center gap-1.5">
+                        <Clock className="h-3 w-3 text-primary" /> {task.estimated_hours || 0} ساعة عمل
                       </span>
-                      <span className="text-xs text-gray-400">#مشروع {task.project_id}</span>
+                      <span className="text-[10px] font-bold text-white/40 bg-white/5 px-2 py-0.5 rounded-md border border-white/5">#مشروع {task.project_id}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 shrink-0 mr-3">
-                    <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                      task.priority === 'high' ? 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
-                      task.priority === 'medium' ? 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' :
-                      'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+                  <div className="flex items-center gap-3 shrink-0 mr-4">
+                    <span className={`inline-flex items-center rounded-lg px-2 py-1 text-[9px] font-bold uppercase tracking-wider ${
+                      task.priority === 'high' ? 'bg-red-500 text-white shadow-[0_0_12px_rgba(239,68,68,0.3)]' :
+                      task.priority === 'normal' ? 'bg-amber-500 text-white' :
+                      'bg-emerald-500 text-white'
                     }`}>
-                      {task.priority === 'high' ? 'عالية' : task.priority === 'medium' ? 'متوسطة' : 'منخفضة'}
-                    </span>
-                    <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                      task.status === 'pending' ? 'bg-gray-50 text-gray-600 dark:bg-gray-800 dark:text-gray-400' :
-                      task.status === 'in_progress' ? 'bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400' :
-                      'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400'
-                    }`}>
-                      {getStatusText(task.status)}
+                      {task.priority === 'high' ? 'عاجل' : task.priority === 'normal' ? 'متوسط' : 'عادي'}
                     </span>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center h-48 text-center p-6">
-              <CheckSquare className="h-8 w-8 text-emerald-300 dark:text-emerald-700 mb-2" />
-              <p className="text-sm font-medium text-gray-900 dark:text-white">ممتاز!</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">لا توجد مهام معلقة.</p>
-            </div>
-          )}
-        </div>
-
-        {/* Recent Time Logs */}
-        <div className="rounded-2xl bg-white dark:bg-[#0f172a] shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-              <Clock className="h-5 w-5 text-indigo-500" /> آخر سجلات الوقت
-            </h3>
-            <Link href="/dashboard/time-logs" className="text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:underline flex items-center gap-1">
-              عرض الكل <ArrowUpRight className="h-3 w-3" />
-            </Link>
-          </div>
-          {recentTimeLogs.length > 0 ? (
-            <div className="divide-y divide-gray-50 dark:divide-gray-800/50">
-              {recentTimeLogs.map((log) => (
-                <div key={log.id} className="px-6 py-4 flex items-center justify-between hover:bg-gray-50/50 dark:hover:bg-gray-800/20 transition-colors">
-                  <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <div className="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
-                      <Clock className="h-4 w-4" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">{log.actual_hours} ساعة <span className="text-xs text-gray-400">- مهمة #{log.task_id}</span></p>
-                      {log.comment && <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">{log.comment}</p>}
-                    </div>
-                  </div>
-                  <span className="text-xs text-gray-400 shrink-0 mr-3">
-                    {log.work_date ? format(new Date(log.work_date), 'dd MMM', { locale: ar }) : ''}
-                  </span>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center h-40 text-center p-6">
-              <Clock className="h-8 w-8 text-gray-300 dark:text-gray-600 mb-2" />
-              <p className="text-sm text-gray-500 dark:text-gray-400">لا توجد سجلات وقت حديثة.</p>
-            </div>
-          )}
-        </div>
-
-        {/* Recent Payouts */}
-        <div className="rounded-2xl bg-white dark:bg-[#0f172a] shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-              <Banknote className="h-5 w-5 text-emerald-500" /> آخر المدفوعات
-            </h3>
-            <Link href="/dashboard/payouts" className="text-xs text-indigo-600 dark:text-indigo-400 font-medium hover:underline flex items-center gap-1">
-              عرض الكل <ArrowUpRight className="h-3 w-3" />
-            </Link>
-          </div>
-          {recentPayouts.length > 0 ? (
-            <div className="divide-y divide-gray-50 dark:divide-gray-800/50">
-              {recentPayouts.map((payout) => (
-                <div key={payout.id} className="px-6 py-4 flex items-center justify-between hover:bg-gray-50/50 dark:hover:bg-gray-800/20 transition-colors">
-                  <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <div className="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                      <Banknote className="h-4 w-4" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-bold text-gray-900 dark:text-white">${payout.amount_paid?.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
-                      {payout.notes && <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">{payout.notes}</p>}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 shrink-0 mr-3">
-                    <span className="text-xs text-gray-400">مستخدم #{payout.user_id}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center h-40 text-center p-6">
-              <Banknote className="h-8 w-8 text-gray-300 dark:text-gray-600 mb-2" />
-              <p className="text-sm text-gray-500 dark:text-gray-400">لا توجد مدفوعات حديثة.</p>
+            <div className="flex flex-col items-center justify-center py-16 text-center">
+              <div className="p-4 bg-emerald-500/10 rounded-full mb-4">
+                 <Activity className="h-8 w-8 text-emerald-500" />
+              </div>
+              <p className="text-sm font-bold text-foreground">رائع! جميع المهام تحت السيطرة</p>
             </div>
           )}
         </div>
