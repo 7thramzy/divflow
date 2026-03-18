@@ -1,0 +1,1036 @@
+﻿.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
+.FullName : The term 
+'.FullName' is not 
+recognized as the name 
+of a cmdlet, function, 
+script file, or 
+operable program. 
+Check the spelling of 
+the name, or if a path 
+was included, verify 
+that the path is 
+correct and try again.
+At line:1 char:86
++ ... .tsx,*.ts -Path 
+app,components,lib | 
+Where-Object { 
+.FullName -notmat ...
++                      
+                       
+            ~~~~~~~~~
+    + CategoryInfo     
+         : ObjectNotF  
+  ound: (.FullName:S   
+ tring) [], Command    
+NotFoundException
+    + FullyQualifiedEr 
+   rorId : CommandNot  
+  FoundException
+ 
