@@ -7,7 +7,7 @@ import { Task, PaginatedResponse, Milestone, User } from "@/lib/types";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Pagination } from "@/components/ui/Pagination";
 import { SortableHeader } from "@/components/ui/SortableHeader";
-import { SkeletonTable, SkeletonStatCards, SkeletonChart } from "@/components/ui/SkeletonTable";
+import { SkeletonTable, SkeletonStatCards, SkeletonChart, SkeletonCards } from "@/components/ui/SkeletonTable";
 import { CHART_COLORS } from "@/lib/constants";
 import { getStatusLabel, exportToCSV, cn } from "@/lib/utils";
 import {
@@ -430,7 +430,7 @@ function TasksPageInner() {
   // Priority chart
   const priorityData = [
     { name: "منخفضة", value: tasks.filter(t => t.priority === "low").length },
-    { name: "متوسطة", value: tasks.filter(t => t.priority === "medium" || t.priority === 'normal').length },
+    { name: "متوسطة", value: tasks.filter(t => t.priority === "normal").length },
     { name: "عالية", value: tasks.filter(t => t.priority === "high").length },
   ];
 
